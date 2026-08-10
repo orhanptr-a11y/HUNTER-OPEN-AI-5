@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2030 HUNTER — Verified Research Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050a13;--panel:rgba(10,18,31,.88);--panel2:#0d1727;--line:#1b2d45;
+  --text:#eef5ff;--muted:#8ea4bd;--blue:#63b3ff;--green:#55e6a5;
+  --yellow:#ffd166;--red:#ff7188;--cyan:#55d6ff;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;color:var(--text);font-family:"DM Sans",system-ui,sans-serif;
+ background:
+ radial-gradient(circle at 15% 0%,rgba(40,120,220,.16),transparent 34%),
+ radial-gradient(circle at 90% 20%,rgba(0,210,190,.10),transparent 30%),
+ linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+ var(--bg);
+ background-size:auto,auto,36px 36px,36px 36px;
+ min-height:100vh;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 35%,rgba(0,0,0,.45));}
+.wrap{max-width:1500px;margin:auto;padding:24px;position:relative}
+.top{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;margin-bottom:16px}
+.brand{font-family:"Space Grotesk",sans-serif;font-size:42px;font-weight:700;letter-spacing:-1.5px}
+.brand span{color:var(--blue)}
+.sub{color:var(--muted);margin-top:5px}
+.actions{display:flex;gap:10px;align-items:center}
+button{border:1px solid #2b557e;background:linear-gradient(135deg,#2472b6,#16517f);color:#fff;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+button:hover{filter:brightness(1.1)}button:disabled{opacity:.5;cursor:wait}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 18px 50px rgba(0,0,0,.18);backdrop-filter:blur(10px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:13px}
+.label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+.num{font-family:"Space Grotesk";font-size:26px;font-weight:700;margin-top:5px}
+.scanbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.pill{display:inline-flex;padding:5px 9px;border:1px solid #23415f;border-radius:999px;color:#b9dfff;background:#0d2238;font-size:11px}
+.status{color:var(--muted);font-size:13px;margin-left:auto}
+h2,h3{font-family:"Space Grotesk";margin:0 0 13px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+th{color:#91afd0;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+tr.clickable{cursor:pointer}tr.clickable:hover{background:rgba(70,160,255,.06)}
+.score{font-family:"Space Grotesk";font-weight:700;font-size:18px;color:var(--cyan)}
+.rank{color:var(--muted)}
+.radar-list{display:flex;flex-direction:column;gap:7px;max-height:620px;overflow:auto}
+.radar-item{display:grid;grid-template-columns:28px 1fr auto;gap:9px;align-items:center;padding:9px;border:1px solid transparent;border-radius:11px;cursor:pointer}
+.radar-item:hover{background:#0c1c30;border-color:#1d3855}
+.radar-score{font-family:"Space Grotesk";font-weight:700}
+.radar-name{font-weight:700;font-size:13px}
+.radar-sub{font-size:11px;color:var(--muted)}
+.section{margin-top:16px}
+.hero{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
+.company-name{font-family:"Space Grotesk";font-size:28px;font-weight:700}
+.ticker{color:var(--blue);font-weight:800}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:999px;font-size:11px;border:1px solid #264767;background:#0b1d31}
+.good{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.info-box{background:#091321;border:1px solid var(--line);border-radius:13px;padding:13px}
+.info-box h4{margin:0 0 8px;font-family:"Space Grotesk";font-size:13px;color:#a8c8e9}
+.info-box p{margin:0;color:#d9e5f2;line-height:1.55;font-size:13px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.metric{background:#091321;border:1px solid var(--line);border-radius:12px;padding:11px}
+.metric b{display:block;font-family:"Space Grotesk";font-size:17px;margin-top:3px}
+.bars{display:grid;gap:7px}
+.barrow{display:grid;grid-template-columns:150px 1fr 34px;gap:8px;align-items:center;font-size:12px}
+.barbg{height:8px;background:#162438;border-radius:99px;overflow:hidden}.barfill{height:100%;background:linear-gradient(90deg,#2780c8,#58d6ff);border-radius:99px}
+.sources{display:grid;gap:7px}
+.source{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:10px;background:#091321}
+.source a{color:#9fd1ff;text-decoration:none}.source a:hover{text-decoration:underline}
+.source small{color:var(--muted)}
+.claim{padding:10px;border-left:3px solid var(--green);background:#091321;border-radius:8px;margin-bottom:8px}
+.claim.warn{border-left-color:var(--yellow)}.claim.bad{border-left-color:var(--red)}
+.history{max-height:280px;overflow:auto}
+.history-item{padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
+.empty{text-align:center;color:var(--muted);padding:28px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.68);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal.open{display:flex}.modalbox{max-width:1100px;width:100%;max-height:92vh;overflow:auto;background:#08111f;border:1px solid #27415e;border-radius:20px;padding:20px}
+.close{float:right;background:#14263b;border-color:#294664;padding:8px 11px}
+.note{font-size:11px;color:var(--muted);line-height:1.5}
+@media(max-width:1050px){.layout{grid-template-columns:1fr}.radar-list{max-height:360px}.top{grid-template-columns:1fr}.status{margin-left:0}}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.brand{font-size:32px}.barrow{grid-template-columns:120px 1fr 28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="brand">2030 <span>HUNTER</span></div>
+      <div class="sub">Potansiyel şirket keşfi • doğrulanabilir yatırım tezi • 5X–10X odaklı araştırma terminali</div>
+    </div>
+    <div class="actions">
+      <button id="scan">⚡ SCAN NOW</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="label">Yeni keşif</div><div class="num" id="newCount">0</div></div>
+    <div class="stat"><div class="label">Radar 80+</div><div class="num" id="radarCount">0</div></div>
+    <div class="stat"><div class="label">Top Tier 90+</div><div class="num" id="topCount">0</div></div>
+    <div class="stat"><div class="label">Tarama</div><div class="num" id="scanCount">0</div></div>
+  </div>
+
+  <div class="scanbar">
+    <span class="pill">26 TEMA</span>
+    <span class="pill">SEC / IR ÖNCELİKLİ</span>
+    <span class="pill">TÜRKÇE TEZ</span>
+    <span class="pill">KAYNAK LİNKLERİ</span>
+    <span class="pill">HALLÜSİNASYON FİLTRESİ</span>
+    <span class="status" id="status">Hazır.</span>
+  </div>
+
+  <div class="layout">
+    <main>
+      <div class="card">
+        <h2>🆕 Yeni Keşifler</h2>
+        <div class="note">Her tarama burada geçmişe eklenir. Yeni bir şirketin skoru mevcut radara göre konumunu belirler.</div>
+        <div style="height:10px"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Score</th><th>Ticker</th><th>Şirket</th><th>Tema</th><th>Durum</th><th>5X–10X nedeni</th></tr></thead>
+            <tbody id="discoveries"><tr><td colspan="6" class="empty">İlk taramayı başlat.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card section">
+        <h2>📚 Tarama Geçmişi</h2>
+        <div id="history" class="history"><div class="empty">Henüz tarama yok.</div></div>
+      </div>
+
+      <div class="card section">
+        <h2>🔐 Araştırma Standardı</h2>
+        <div class="grid2">
+          <div class="info-box"><h4>🟢 Doğrulanmış</h4><p>SEC/EDGAR, şirket IR, resmi devlet kurumu, resmi müşteri açıklaması gibi birincil kaynakla desteklenen gerçek.</p></div>
+          <div class="info-box"><h4>🔵 Şirket / Piyasa Beklentisi</h4><p>Yönetim guidance'ı veya güvenilir piyasa beklentisi. Gerçekleşmiş sonuç gibi sunulmaz.</p></div>
+          <div class="info-box"><h4>🟡 Hunter Çıkarımı</h4><p>Kaynaklardan türetilen analizdir; gerçek veya garanti edilmiş sonuç değildir.</p></div>
+          <div class="info-box"><h4>🔴 Doğrulanamadı</h4><p>Kaynak bulunamıyorsa kritik iddia kesin gerçek olarak yazılmaz ve şirket 80+ radarına zorlanmaz.</p></div>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="card">
+        <h2>🏆 Hunter Radar</h2>
+        <div class="note">Tüm şirketler skoruna göre otomatik sıralanır. Yeni şirketler burada kalıcı olarak yerini alır.</div>
+        <div style="height:10px"></div>
+        <div id="radarList" class="radar-list"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div id="modal" class="modal">
+  <div class="modalbox">
+    <button class="close" onclick="closeModal()">Kapat</button>
+    <div id="detail"></div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "hunter_v8_state";
+const $ = id => document.getElementById(id);
+
+let state = {
+  scans: [],
+  radar: []
+};
+
+const seedRadar = [
+  ["POET","POET Technologies","Optical / Photonics",91],
+  ["VOYG","Voyager Technologies","Space + Defense",94],
+  ["RKLB","Rocket Lab","Space + Defense",93],
+  ["PL","Planet Labs","Earth Data + AI + Defense",92],
+  ["CRDO","Credo Technology","AI Connectivity / Photonics",91],
+  ["ASTS","AST SpaceMobile","Space Communications",90],
+  ["KTOS","Kratos Defense","Defense + Hypersonics",90],
+  ["TSEM","Tower Semiconductor","Semiconductor / Silicon Photonics",89],
+  ["AIP","Arteris","Semiconductor IP / NoC",89],
+  ["ALMU","Aeluma","Photonics / Compound Semiconductor",88],
+  ["VRT","Vertiv","AI Power + Cooling",88],
+  ["LEU","Centrus Energy","Nuclear Fuel / HALEU",88],
+  ["AEHR","Aehr Test Systems","Semiconductor Test",87],
+  ["RDW","Redwire","Space + Defense",87],
+  ["KRMN","Karman Space & Defense","Space + Defense Components",86],
+  ["MOD","Modine Manufacturing","Data Center Cooling",85],
+  ["VICR","Vicor","Power Electronics",85],
+  ["SERV","Serve Robotics","Physical AI / Robotics",84],
+  ["MPTI","M-tron Industries","Aerospace / Defense Components",84],
+  ["BWXT","BWX Technologies","Nuclear + Defense",84],
+  ["TEM","Tempus AI","AI + Biotech",84],
+  ["ALAB","Astera Labs","AI Connectivity",84],
+  ["LUNR","Intuitive Machines","Lunar Economy",83],
+  ["NBIS","Nebius Group","AI Infrastructure",83],
+  ["CLS","Celestica","AI Manufacturing / Infrastructure",82],
+  ["COHR","Coherent","Photonics",81],
+  ["LITE","Lumentum","Photonics",80]
+];
+
+function loadState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if(saved && Array.isArray(saved.radar)){
+      state = saved;
+    } else {
+      state.radar = seedRadar.map(x=>({ticker:x[0],company:x[1],theme:x[2],score:x[3],seed:true}));
+    }
+  }catch(e){
+    state.radar = seedRadar.map(x=>({ticker:x[0],company:x[1],theme:x[2],score:x[3],seed:true}));
+  }
+  if(!state.radar.length) state.radar = seedRadar.map(x=>({ticker:x[0],company:x[1],theme:x[2],score:x[3],seed:true}));
+  renderAll();
+}
+
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function esc(v){
+  return String(v ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+
+function safeUrl(url){
+  try{
+    const u = new URL(url);
+    return ["http:","https:"].includes(u.protocol) ? u.href : "#";
+  }catch(e){ return "#"; }
+}
+
+function renderAll(){
+  renderRadar();
+  renderDiscoveries();
+  renderHistory();
+  $("scanCount").textContent = state.scans.length;
+  const discoveries = state.scans.flatMap(s => s.candidates || []);
+  $("newCount").textContent = discoveries.length;
+  $("radarCount").textContent = state.radar.filter(x=>x.score>=80).length;
+  $("topCount").textContent = state.radar.filter(x=>x.score>=90).length;
+}
+
+function renderRadar(){
+  const list = [...state.radar].sort((a,b)=>b.score-a.score || a.ticker.localeCompare(b.ticker));
+  $("radarList").innerHTML = list.map((x,i)=>`
+    <div class="radar-item" onclick="openCompany('${esc(x.ticker)}')">
+      <div class="rank">${i+1}</div>
+      <div><div class="radar-name">${esc(x.ticker)} — ${esc(x.company)}</div><div class="radar-sub">${esc(x.theme||"")}${x.seed?"":" • yeni keşif"}</div></div>
+      <div class="radar-score">${x.score}</div>
+    </div>
+  `).join("");
+}
+
+function renderDiscoveries(){
+  const all = state.scans.flatMap(s => (s.candidates||[]).map(c=>({...c, scanDate:s.date, scanId:s.id})));
+  all.sort((a,b)=>b.score-a.score || b.scanDate.localeCompare(a.scanDate));
+  $("discoveries").innerHTML = all.length ? all.map((x,i)=>`
+    <tr class="clickable" onclick="openCandidate('${esc(x.ticker)}','${esc(x.scanId)}')">
+      <td class="score">${x.score}</td>
+      <td><b>${esc(x.ticker)}</b></td>
+      <td>${esc(x.company)}</td>
+      <td>${esc(x.theme)}</td>
+      <td><span class="badge ${x.score>=90?'good':x.score>=85?'warn':''}">${esc(x.status)}</span></td>
+      <td>${esc(x.why_5x_10x_tr || x.why_found_tr || "")}</td>
+    </tr>
+  `).join("") : '<tr><td colspan="6" class="empty">Henüz yeni keşif yok.</td></tr>';
+}
+
+function renderHistory(){
+  if(!state.scans.length){
+    $("history").innerHTML = '<div class="empty">Henüz tarama yok.</div>';
+    return;
+  }
+  $("history").innerHTML = [...state.scans].reverse().map(s=>`
+    <div class="history-item">
+      <b>${esc(new Date(s.date).toLocaleString("tr-TR"))}</b>
+      — ${s.candidates.length} yeni aday
+      — ${s.candidates.filter(x=>x.score>=90).length} Top Tier
+      <span class="muted">• ${esc(s.note||"")}</span>
+    </div>
+  `).join("");
+}
+
+function findCandidate(ticker, scanId){
+  const scan = state.scans.find(s=>s.id===scanId);
+  return scan?.candidates?.find(c=>c.ticker===ticker) || null;
+}
+
+function openCandidate(ticker, scanId){
+  const c = findCandidate(ticker,scanId);
+  if(c) showDetail(c);
+}
+
+function openCompany(ticker){
+  let c = null;
+  for(const s of state.scans){
+    const found = (s.candidates||[]).find(x=>x.ticker===ticker);
+    if(found){c=found;break;}
+  }
+  if(c){ showDetail(c); return; }
+  const r = state.radar.find(x=>x.ticker===ticker);
+  if(r){
+    showDetail({
+      ticker:r.ticker, company:r.company, theme:r.theme, score:r.score, status:r.score>=90?"TOP TIER":"RADAR",
+      confidence:"RADAR",
+      why_found_tr:"Bu şirket mevcut Hunter radarında yer alıyor. Sonraki taramalarda güncel verilerle yeniden doğrulanabilir.",
+      company_what_it_does_tr:"Detaylı şirket araştırması için yeni bir tarama veya manuel kaynak incelemesi yapılmalı.",
+      business_model_tr:"Bu kart seed radar kaydından geliyor; ayrıntılı iş modeli henüz bu taramada oluşturulmadı.",
+      why_5x_10x_tr:"Mevcut radar skoru, şirketin 10X açısından araştırmaya değer olduğunu gösterir; ayrıntılı 10X tezi için derin araştırma gerekir.",
+      future_story_tr:"Yeni taramada doğrulanmış kaynaklarla güncellenebilir.",
+      market_or_company_expectations_tr:"Güncel kaynaklarla ayrıca doğrulanmalı.",
+      our_investment_motivation_tr:"Radarımızdaki yüksek puan nedeniyle manuel araştırmaya değer.",
+      risks_tr:["Güncel detaylı araştırma bu kartta yok."],
+      what_breaks_thesis_tr:"Güncel finansal ve ticari veriler doğrulanmadan kesin bir kırılma noktası belirlenmemeli.",
+      winner_dna_score:null, winner_dna:{},
+      tenx:{feasibility:"ARAŞTIR",current_market_cap:null,future_market_cap_10x:null,key_assumptions_tr:[],math_note_tr:"Derin tarama gerekli."},
+      financial_snapshot:{},claims:[],sources:[]
+    });
+  }
+}
+
+function scoreBar(name,val){
+  if(val===null || val===undefined || val==="") return "";
+  const n=Math.max(0,Math.min(10,Number(val)));
+  return `<div class="barrow"><span>${esc(name)}</span><span class="barbg"><span class="barfill" style="width:${n*10}%"></span></span><b>${n}/10</b></div>`;
+}
+
+function sourceHtml(s){
+  const url=safeUrl(s.url);
+  return `<div class="source">
+    <span class="badge ${s.type==="PRIMARY"?"good":""}">${esc(s.type||"SOURCE")}</span>
+    <div><b>${esc(s.title||"Kaynak")}</b><br><small>${esc(s.publisher||"")} ${esc(s.date||"")}</small></div>
+    ${url!=="#" ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Aç ↗</a>` : ""}
+  </div>`;
+}
+
+function showDetail(c){
+  const w=c.winner_dna||{};
+  const fin=c.financial_snapshot||{};
+  const tx=c.tenx||{};
+  const claims=(c.claims||[]).map(cl=>`
+    <div class="claim ${cl.verification==="DOĞRULANAMADI"?"bad":cl.verification==="ŞİRKET BEKLENTİSİ"?"warn":""}">
+      <b>${esc(cl.verification||"BİLGİ")}</b> — ${esc(cl.claim_tr||"")}
+      <div class="note">${esc(cl.source_type||"")} ${esc(cl.source_title||"")} ${esc(cl.source_date||"")}</div>
+      ${safeUrl(cl.url)!=="#" ? `<a href="${esc(safeUrl(cl.url))}" target="_blank" rel="noopener noreferrer">Kaynağı aç ↗</a>` : ""}
+    </div>
+  `).join("");
+
+  const sources=(c.sources||[]).map(sourceHtml).join("");
+
+  $("detail").innerHTML = `
+    <div class="hero">
+      <div><div class="ticker">${esc(c.ticker)}</div><div class="company-name">${esc(c.company)}</div><div class="sub">${esc(c.theme||"")}</div></div>
+      <div><span class="badge ${c.score>=90?'good':c.score>=85?'warn':''}">Hunter ${esc(c.score)}/100</span> <span class="badge">Güven: ${esc(c.confidence||"")}</span></div>
+    </div>
+
+    <div class="section grid2">
+      <div class="info-box"><h4>🎯 Neden bu hisse?</h4><p>${esc(c.why_found_tr||"")}</p></div>
+      <div class="info-box"><h4>🚀 Neden 5X–10X olabilir?</h4><p>${esc(c.why_5x_10x_tr||"")}</p></div>
+      <div class="info-box"><h4>🏢 Şirket ne yapıyor?</h4><p>${esc(c.company_what_it_does_tr||"")}</p></div>
+      <div class="info-box"><h4>💰 Nasıl para kazanıyor?</h4><p>${esc(c.business_model_tr||"")}</p></div>
+      <div class="info-box"><h4>📈 Gelecek hikâyesi</h4><p>${esc(c.future_story_tr||"")}</p></div>
+      <div class="info-box"><h4>🔭 Beklentiler</h4><p>${esc(c.market_or_company_expectations_tr||"")}</p></div>
+      <div class="info-box"><h4>💡 Bizim yatırım motivasyonumuz</h4><p>${esc(c.our_investment_motivation_tr||"")}</p></div>
+      <div class="info-box"><h4>⚠️ Tezi ne bozar?</h4><p>${esc(c.what_breaks_thesis_tr||"")}</p></div>
+    </div>
+
+    <div class="section">
+      <h3>💰 Finansal görünüm</h3>
+      <div class="metrics">
+        <div class="metric"><div class="label">Revenue</div><b>${esc(fin.revenue?.value||"—")}</b><small>${esc(fin.revenue?.period||"")}</small></div>
+        <div class="metric"><div class="label">Revenue Growth</div><b>${esc(fin.revenue_growth?.value||"—")}</b><small>${esc(fin.revenue_growth?.period||"")}</small></div>
+        <div class="metric"><div class="label">Cash</div><b>${esc(fin.cash?.value||"—")}</b><small>${esc(fin.cash?.period||"")}</small></div>
+        <div class="metric"><div class="label">FCF</div><b>${esc(fin.free_cash_flow?.value||"—")}</b><small>${esc(fin.free_cash_flow?.period||"")}</small></div>
+        <div class="metric"><div class="label">Backlog</div><b>${esc(fin.backlog?.value||"—")}</b><small>${esc(fin.backlog?.period||"")}</small></div>
+      </div>
+    </div>
+
+    <div class="section grid2">
+      <div class="info-box">
+        <h4>🧬 Winner DNA — ${esc(c.winner_dna_score??"—")}/100</h4>
+        <div class="bars">
+          ${scoreBar("Revenue acceleration",w.revenue_acceleration)}
+          ${scoreBar("Marj potansiyeli",w.margin_potential)}
+          ${scoreBar("Operating leverage",w.operating_leverage)}
+          ${scoreBar("Darboğaz sahipliği",w.bottleneck_ownership)}
+          ${scoreBar("Dikey entegrasyon",w.vertical_integration)}
+          ${scoreBar("Moat",w.moat)}
+          ${scoreBar("Müşteri doğrulaması",w.customer_validation)}
+          ${scoreBar("TAM / runway",w.tam_runway)}
+          ${scoreBar("Market-cap asimetrisi",w.market_cap_asymmetry)}
+          ${scoreBar("Sermaye verimliliği",w.capital_efficiency)}
+          ${scoreBar("Dilution",w.dilution)}
+          ${scoreBar("Yönetim",w.management_execution)}
+        </div>
+      </div>
+      <div class="info-box">
+        <h4>🧮 10X Matematiği</h4>
+        <p><b>Feasibility:</b> ${esc(tx.feasibility||"—")}</p>
+        <p style="margin-top:8px"><b>Mevcut market cap:</b> ${esc(tx.current_market_cap||"—")}</p>
+        <p><b>10X market cap:</b> ${esc(tx.future_market_cap_10x||"—")}</p>
+        <p style="margin-top:8px">${esc(tx.math_note_tr||"")}</p>
+        ${(tx.key_assumptions_tr||[]).map(x=>`<div class="claim warn">• ${esc(x)}</div>`).join("")}
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>🧾 Kanıtlar</h3>
+      ${claims || '<div class="empty">Bu kart için ayrıntılı claim kaydı yok.</div>'}
+    </div>
+
+    <div class="section">
+      <h3>📚 Referanslar</h3>
+      <div class="sources">${sources || '<div class="empty">Kaynak listesi yok.</div>'}</div>
+      <div class="note" style="margin-top:9px">Kaynak bağlantıları manuel doğrulama içindir. Hunter'ın çıkarımları, kaynakların kendisi değildir.</div>
+    </div>
+
+    <div class="section">
+      <h3>⚠️ Riskler</h3>
+      ${(c.risks_tr||[]).map(r=>`<div class="claim bad">${esc(r)}</div>`).join("")}
+    </div>
+  `;
+
+  $("modal").classList.add("open");
+}
+
+function closeModal(){
+  $("modal").classList.remove("open");
+}
+
+async function poll(id){
+  for(let i=0;i<180;i++){
+    const r=await fetch("/api/scan?id="+encodeURIComponent(id),{cache:"no-store"});
+    const d=await r.json();
+
+    if(!r.ok) throw new Error(d.error||("STATUS HTTP "+r.status));
+
+    if(d.status==="completed"){
+      const result=d.result || {};
+      const candidates=Array.isArray(result.candidates)?result.candidates:[];
+      const valid=candidates.filter(c=>c && c.ticker && Number(c.score)>=80);
+
+      const scan={
+        id:"SCAN-"+Date.now(),
+        date:new Date().toISOString(),
+        candidates:valid,
+        note:result.scan_summary?.research_note_tr || ""
+      };
+
+      state.scans.push(scan);
+
+      for(const c of valid){
+        const existing=state.radar.find(x=>x.ticker===c.ticker);
+        if(existing){
+          existing.score=Math.max(existing.score,Number(c.score));
+          existing.company=c.company||existing.company;
+          existing.theme=c.theme||existing.theme;
+        }else{
+          state.radar.push({
+            ticker:c.ticker,
+            company:c.company,
+            theme:c.theme,
+            score:Number(c.score),
+            seed:false
+          });
+        }
+      }
+
+      saveState();
+      renderAll();
+
+      $("status").textContent=`SCAN COMPLETE • ${valid.length} yeni şirket bulundu.`;
+      $("scan").disabled=false;
+
+      if(valid.length) showDetail(valid[0]);
+      return;
+    }
+
+    if(d.status==="failed"){
+      throw new Error(d.error||"OpenAI araştırması başarısız oldu.");
+    }
+
+    $("status").textContent=`Araştırılıyor… ${d.status||"in_progress"} • yaklaşık ${Math.round((i+1)/180*100)}%`;
+    await new Promise(r=>setTimeout(r,10000));
+  }
+
+  throw new Error("Araştırma 30 dakika içinde tamamlanmadı.");
+}
+
+$("scan").onclick=async()=>{
+  $("scan").disabled=true;
+  $("status").textContent="Güvenilir kaynaklarla araştırma başlatılıyor…";
+
+  try{
+    const r=await fetch("/api/scan",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:"{}"
+    });
+
+    const d=await r.json();
+
+    if(!r.ok) throw new Error(d.error||("START HTTP "+r.status));
+    if(!d.id) throw new Error("OpenAI research ID dönmedi.");
+
+    await poll(d.id);
+  }catch(e){
+    $("status").innerHTML='<span class="bad">Tarama hatası: '+esc(e.message)+'</span>';
+    $("scan").disabled=false;
+  }
+};
+
+$("modal").addEventListener("click",e=>{
+  if(e.target.id==="modal") closeModal();
+});
+
+loadState();
+</script>
+</body>
+</html>

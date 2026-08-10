@@ -1,0 +1,200 @@
+{
+  "themes": [
+    "AI / Yapay Zeka",
+    "AI Enerji Altyapısı",
+    "Semiconductor Ecosystem",
+    "Robotics / Physical AI",
+    "Nuclear Renaissance",
+    "Space Economy",
+    "AI + Biotechnology / TechBio",
+    "Optical / Photonics",
+    "Grid Modernization",
+    "Cybersecurity",
+    "Advanced Materials",
+    "Critical Minerals & Strategic Materials",
+    "Industrial Automation",
+    "Geothermal",
+    "Autonomous Transportation",
+    "Personalized Medicine",
+    "Space Communications",
+    "Quantum Computing",
+    "Energy Storage",
+    "Spatial Intelligence",
+    "Edge / Neuromorphic AI",
+    "Synthetic Biology / Precision Fermentation",
+    "Direct Lithium Extraction (DLE)",
+    "Everything-to-Grid",
+    "Space Manufacturing",
+    "Carbon Capture / Industrial Decarbonization"
+  ],
+  "seed": [
+    [
+      "POET",
+      "POET Technologies",
+      "Optical / Photonics",
+      91
+    ],
+    [
+      "VOYG",
+      "Voyager Technologies",
+      "Space + Defense",
+      94
+    ],
+    [
+      "RKLB",
+      "Rocket Lab",
+      "Space + Defense",
+      93
+    ],
+    [
+      "PL",
+      "Planet Labs",
+      "Earth Data + AI + Defense",
+      92
+    ],
+    [
+      "CRDO",
+      "Credo Technology",
+      "AI Connectivity / Photonics",
+      91
+    ],
+    [
+      "ASTS",
+      "AST SpaceMobile",
+      "Space Communications",
+      90
+    ],
+    [
+      "KTOS",
+      "Kratos Defense",
+      "Defense + Hypersonics",
+      90
+    ],
+    [
+      "TSEM",
+      "Tower Semiconductor",
+      "Semiconductor / Silicon Photonics",
+      89
+    ],
+    [
+      "AIP",
+      "Arteris",
+      "Semiconductor IP / NoC",
+      89
+    ],
+    [
+      "ALMU",
+      "Aeluma",
+      "Photonics / Compound Semiconductor",
+      88
+    ],
+    [
+      "VRT",
+      "Vertiv",
+      "AI Power + Cooling",
+      88
+    ],
+    [
+      "LEU",
+      "Centrus Energy",
+      "Nuclear Fuel / HALEU",
+      88
+    ],
+    [
+      "AEHR",
+      "Aehr Test Systems",
+      "Semiconductor Test",
+      87
+    ],
+    [
+      "RDW",
+      "Redwire",
+      "Space + Defense",
+      87
+    ],
+    [
+      "RKLB",
+      "Rocket Lab",
+      "Space + Defense",
+      87
+    ],
+    [
+      "KRMN",
+      "Karman Space & Defense",
+      "Space + Defense Components",
+      86
+    ],
+    [
+      "MOD",
+      "Modine Manufacturing",
+      "Data Center Cooling",
+      85
+    ],
+    [
+      "VICR",
+      "Vicor",
+      "Power Electronics",
+      85
+    ],
+    [
+      "SERV",
+      "Serve Robotics",
+      "Physical AI / Robotics",
+      84
+    ],
+    [
+      "MPTI",
+      "M-tron Industries",
+      "Aerospace / Defense Components",
+      84
+    ],
+    [
+      "BWXT",
+      "BWX Technologies",
+      "Nuclear + Defense",
+      84
+    ],
+    [
+      "TEM",
+      "Tempus AI",
+      "AI + Biotech",
+      84
+    ],
+    [
+      "ALAB",
+      "Astera Labs",
+      "AI Connectivity",
+      84
+    ],
+    [
+      "LUNR",
+      "Intuitive Machines",
+      "Lunar Economy",
+      83
+    ],
+    [
+      "NBIS",
+      "Nebius Group",
+      "AI Infrastructure",
+      83
+    ],
+    [
+      "CLS",
+      "Celestica",
+      "AI Manufacturing / Infrastructure",
+      82
+    ],
+    [
+      "COHR",
+      "Coherent",
+      "Photonics",
+      81
+    ],
+    [
+      "LITE",
+      "Lumentum",
+      "Photonics",
+      80
+    ]
+  ]
+}
